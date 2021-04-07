@@ -1,9 +1,6 @@
 package kr.mapo.eco100.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Builder
+@ToString(exclude = "board")
 public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

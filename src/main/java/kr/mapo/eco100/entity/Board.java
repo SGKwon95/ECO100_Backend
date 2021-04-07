@@ -1,10 +1,7 @@
 package kr.mapo.eco100.entity;
 
 import kr.mapo.eco100.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -17,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder
+@ToString(exclude = "user")
 public class Board extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +27,6 @@ public class Board extends BaseTimeEntity {
     private String imageUrl;
 
     private Integer Likes;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

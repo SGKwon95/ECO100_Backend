@@ -12,8 +12,9 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
-    generate-ddl: false
+      ddl-auto: create-drop
+      #generate-ddl이 true이면 서버를 켜면 ddl문이 실행된다
+    generate-ddl: true
 
     properties:
       format_sql: true
