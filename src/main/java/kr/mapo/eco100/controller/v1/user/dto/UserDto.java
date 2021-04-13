@@ -11,9 +11,11 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 @ToString
 public class UserDto {
 
-    private String email;
+    private Long userId;
 
     private String nickname;
+
+    private Integer level;
 
     public UserDto(User source) { copyProperties(source,this);}
 }

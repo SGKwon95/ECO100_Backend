@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 import static org.springframework.beans.BeanUtils.copyProperties;
 
 @Getter
@@ -15,11 +12,12 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 @ToString
 public class BoardDto {
 
-    @Size(max = 30, message = "제목은 30자 이하로 작성해주세요")
-    @NotBlank(message = "제목은 필수로 입력해야 합니다")
+    private Long boardId;
+
+    private Long userId;
+
     private String title;
 
-    @NotBlank(message = "내용은 필수로 입력해야 합니다")
     private String contents;
 
     private String imageUrl;

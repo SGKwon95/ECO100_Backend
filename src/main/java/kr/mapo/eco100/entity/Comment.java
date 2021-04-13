@@ -2,10 +2,8 @@ package kr.mapo.eco100.entity;
 
 import kr.mapo.eco100.BaseTimeEntity;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor

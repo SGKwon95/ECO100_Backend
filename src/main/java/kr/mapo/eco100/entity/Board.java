@@ -2,11 +2,8 @@ package kr.mapo.eco100.entity;
 
 import kr.mapo.eco100.BaseTimeEntity;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -37,4 +34,7 @@ public class Board extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "board")
     private List<Likes> likesList;
+
+    @OneToOne(mappedBy = "board")
+    private Image image;
 }
