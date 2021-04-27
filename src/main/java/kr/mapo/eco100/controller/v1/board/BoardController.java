@@ -1,9 +1,9 @@
 package kr.mapo.eco100.controller.v1.board;
 
-import kr.mapo.eco100.controller.v1.board.dto.BoardDto;
-import kr.mapo.eco100.controller.v1.board.dto.CreateRequest;
 import kr.mapo.eco100.controller.v1.board.dto.IncreaseLikesRequest;
-import kr.mapo.eco100.controller.v1.board.dto.UpdateRequest;
+import kr.mapo.eco100.controller.v1.board.dto.board.BoardDto;
+import kr.mapo.eco100.controller.v1.board.dto.board.CreateRequest;
+import kr.mapo.eco100.controller.v1.board.dto.board.UpdateRequest;
 import kr.mapo.eco100.error.BoardNotFoundException;
 import kr.mapo.eco100.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -66,8 +66,4 @@ public class BoardController {
         return ResponseEntity.noContent().build();
     }
 
-    @ExceptionHandler
-    public ResponseEntity<String> BoardNotFoundExceptionHandler(BoardNotFoundException e) {
-        return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
-    }
 }
