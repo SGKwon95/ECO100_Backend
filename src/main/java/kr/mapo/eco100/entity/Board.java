@@ -23,7 +23,7 @@ public class Board extends BaseTimeEntity {
 
     private String imageUrl;
 
-    private Integer Likes;
+    private Integer likes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -35,6 +35,4 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "board")
     private List<Likes> likesList;
 
-    @OneToOne(mappedBy = "board")
-    private Image image;
 }
