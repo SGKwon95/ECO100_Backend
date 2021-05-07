@@ -32,8 +32,9 @@ public class BoardController {
         
         @Valid
         CreateRequest createRequest = CreateRequest.builder()
-                .userId(Long.parseLong(request.getAttribute("userId").toString()))
-                .title(request.getAttribute("title").toString()).contents(request.getAttribute("contents").toString())
+                .userId(Long.parseLong(request.getParameter("userId")))
+                .title(request.getParameter("title").toString())
+                .contents(request.getParameter("contents").toString())
                 .build();
 
         return ResponseEntity.ok(new BoardDto(boardService.createWithImage(createRequest, request.getFile("image"))));
