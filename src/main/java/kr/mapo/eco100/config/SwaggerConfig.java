@@ -21,7 +21,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .apiInfo(this.apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/api/v1/**"))
+                .paths(PathSelectors.ant("/**"))
                 .build();
     }
 
