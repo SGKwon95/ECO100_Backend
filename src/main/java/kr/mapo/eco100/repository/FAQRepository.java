@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -80,5 +81,21 @@ public class FAQRepository {
 
     public List<FAQ> getFAQlist() {
         return FAQlist;
+    }
+
+    public List<FAQ> searchFAQ(String word) {
+        return FAQlist.stream()
+        .filter(faq->
+            faq.getQuestion().contains(word)
+        )
+        .collect(Collectors.toList());
+    }
+
+    public List<FAQJeju> searchFAQJeju(String word) {
+        return FAQlist_Jeju.stream()
+        .filter(faq->
+            faq.getName().contains(word)
+        )
+        .collect(Collectors.toList());
     }
 }

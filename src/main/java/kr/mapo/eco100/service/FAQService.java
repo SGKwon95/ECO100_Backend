@@ -21,4 +21,12 @@ public class FAQService {
     public List<FAQ> getFAQlist() {
         return repository.getFAQlist();
     }
+    
+    public List<FAQJeju> searchFAQJeju(String word) {
+        return repository.searchFAQJeju(word);
+    }
+
+    public List<FAQ> searchFAQ(String word) {
+        return repository.searchFAQ(word);
+    }
 }
