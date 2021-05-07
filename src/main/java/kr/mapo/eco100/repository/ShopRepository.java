@@ -48,10 +48,10 @@ public class ShopRepository {
                 Float latitude = Float.parseFloat(location.split(", ")[0]);
                 Float longitude = Float.parseFloat(location.split(", ")[1]);
 
-                String base_url = "http://rpinas.iptime.org:10122/";
+                String base_url = "http://rpinas.iptime.org:10122/image/";
                 
-                String img_url = "";
-                String logo_url = "";
+                String img_url = base_url+"shop/"+name+".jpg";
+                String logo_url = base_url+"logo/"+name+".jpg";
 
                 Shop shop = new Shop(id,name,address,phone_num,running_info,web_url,latitude,longitude,img_url,logo_url);
                 shoplist.add(shop);
