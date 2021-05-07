@@ -49,6 +49,7 @@ public class BoardService {
 
         String fileLocation = "./images/board/"; // 저장할 경로를 지정한다.
         FileOutputStream fos = null;
+        String filename = "";
         try {
 
             File dir = new File(fileLocation);
@@ -56,26 +57,21 @@ public class BoardService {
 
             int start = file.getOriginalFilename().lastIndexOf('.');
             String extension = file.getOriginalFilename().substring(start);// 파일 이름의 확장자만 추출한다.
-            String filename = UUID.randomUUID().toString() + extension;
+            filename = UUID.randomUUID().toString() + extension;
 
             File imgfile = new File(fileLocation + filename);
             fos = new FileOutputStream(imgfile);// fileoutputstream은 new로 만들 시 파일을 생성한다.
             fos.write(file.getBytes());// 전송된 이미지를 파일에 저장한다.
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             fos.close();
         }
-        
-        return boardRepository.save(
-            Board.builder()
-                .title(createRequest.getTitle())
-                .contents(createRequest.getContents())
-                .imageUrl(createRequest.getImageUrl())
-                .user(user)
-                .build()
-        );
+
+        return boardRepository
+                .save(Board.builder().title(createRequest.getTitle()).contents(createRequest.getContents())
+                        .imageUrl("http://rpinas.iptime.org:10122/image/board/" + filename).user(user).build());
     }
 
     public Board read(Long boardId) {
