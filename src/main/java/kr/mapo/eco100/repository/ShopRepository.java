@@ -23,7 +23,7 @@ public class ShopRepository {
     @PostConstruct
     public void init() throws IOException {
         shoplist = new ArrayList<>();
-        
+
         XSSFWorkbook workbook = null;
 
         try {
@@ -35,7 +35,7 @@ public class ShopRepository {
             XSSFSheet shop_sheet = workbook.getSheetAt(2);
 
             int rows = shop_sheet.getPhysicalNumberOfRows();
-            for(int rowindex = 1; rowindex < rows; rowindex++) {
+            for (int rowindex = 1; rowindex < rows; rowindex++) {
                 XSSFRow row = shop_sheet.getRow(rowindex);
 
                 Integer id = rowindex;
@@ -49,14 +49,20 @@ public class ShopRepository {
                 Float longitude = Float.parseFloat(location.split(", ")[1]);
 
                 String base_url = "http://rpinas.iptime.org:10122/image/";
-                
-                String img_url = base_url+"shop/"+name+".jpg";
-                String logo_url = base_url+"logo/"+name+".jpg";
 
-                Shop shop = new Shop(id,name,address,phone_num,running_info,web_url,latitude,longitude,img_url,logo_url);
+                String img_url = base_url + "shop/" + name + ".jpg";
+                if (id == 15 || id == 28)
+                    img_url = null;
+
+                String logo_url = base_url + "logo/" + name + ".jpg";
+                if (id == 3 || id == 20 || id == 33 || id == 36 || id == 39 || id == 41)
+                    logo_url = null;
+
+                Shop shop = new Shop(id, name, address, phone_num, running_info, web_url, latitude, longitude, img_url,
+                        logo_url);
                 shoplist.add(shop);
             }
-            
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
