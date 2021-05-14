@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.mapo.eco100.controller.v1.board.dto.BoardDto;
+import kr.mapo.eco100.controller.v1.board.dto.BoardsResponse;
 import kr.mapo.eco100.controller.v1.board.dto.CreateRequest;
 import kr.mapo.eco100.controller.v1.board.dto.IncreaseLikesRequest;
 import kr.mapo.eco100.controller.v1.board.dto.UpdateRequest;
@@ -39,7 +39,7 @@ public class BoardService {
                 .orElseThrow(() -> new UserNotFoundException("해당 유저가 존재하지 않습니다"));
 
         return boardRepository.save(Board.builder().title(createRequest.getTitle())
-                .contents(createRequest.getContents()).imageUrl(createRequest.getImageUrl()).user(user).build());
+                .contents(createRequest.getContents()).imageUrl(createRequest.getImageUrl()).user(user).likes(0).build());
     }
 
     public Board createWithImage(CreateRequest createRequest, MultipartFile file) throws IOException {
@@ -71,17 +71,18 @@ public class BoardService {
 
         return boardRepository
                 .save(Board.builder().title(createRequest.getTitle()).contents(createRequest.getContents())
-                        .imageUrl("http://rpinas.iptime.org:10122/image/board/" + filename).user(user).build());
+                        .imageUrl("http://rpinas.iptime.org:10122/image/board/" + filename).user(user).likes(0).build());
     }
 
     public Board read(Long boardId) {
         return boardRepository.findById(boardId).orElseThrow(() -> new BoardNotFoundException("조회한 아이디의 게시글이 없습니다"));
     }
 
-    public List<BoardDto> getRecentBoards(int currentPage) {
+    public List<BoardsResponse> getRecentBoards(int currentPage) {
+        //PageRequest.of(불러올 페이지, 불러올 페이지 개수, 정렬 방법, 정렬 기준)
         Page<Board> page = boardRepository
-                .findAll(PageRequest.of(currentPage, currentPage + 5, Sort.Direction.DESC, "boardId"));
-        return page.getContent().stream().map(BoardDto::new).collect(Collectors.toList());
+                .findAll(PageRequest.of(currentPage * 5, 5, Sort.Direction.DESC, "boardId"));
+        return page.getContent().stream().map(BoardsResponse::new).collect(Collectors.toList());
     }
 
     public void update(UpdateRequest updateRequest) {
