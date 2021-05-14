@@ -1,6 +1,7 @@
 package kr.mapo.eco100.controller.v1.board;
 
 import kr.mapo.eco100.controller.v1.board.dto.BoardDto;
+import kr.mapo.eco100.controller.v1.board.dto.BoardsResponse;
 import kr.mapo.eco100.controller.v1.board.dto.CreateRequest;
 import kr.mapo.eco100.controller.v1.board.dto.IncreaseLikesRequest;
 import kr.mapo.eco100.controller.v1.board.dto.UpdateRequest;
@@ -29,14 +30,14 @@ public class BoardController {
 
     @ApiOperation(value = "사진 없는 글쓰기")
     @PostMapping("/board/create")
-    public ResponseEntity<BoardDto> create(@RequestBody @Valid CreateRequest createRequest) {
+    public ResponseEntity<BoardsResponse> create(@RequestBody @Valid CreateRequest createRequest) {
 
-        return ResponseEntity.ok(new BoardDto(boardService.create(createRequest)));
+        return ResponseEntity.ok(new BoardsResponse(boardService.create(createRequest)));
     }
 
     @ApiOperation(value = "사진 있는 글쓰기")
     @PostMapping(value = "/board/create/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<BoardDto> createWithImage(MultipartHttpServletRequest request) throws IOException {
+    public ResponseEntity<BoardsResponse> createWithImage(MultipartHttpServletRequest request) throws IOException {
         
         @Valid
         CreateRequest createRequest = CreateRequest.builder()
@@ -45,7 +46,7 @@ public class BoardController {
                 .contents(request.getParameter("contents").toString())
                 .build();
 
-        return ResponseEntity.ok(new BoardDto(boardService.createWithImage(createRequest, request.getFile("image"))));
+        return ResponseEntity.ok(new BoardsResponse(boardService.createWithImage(createRequest, request.getFile("image"))));
     }
 
     @ApiOperation(value = "글 읽기")
@@ -57,7 +58,7 @@ public class BoardController {
 
     @ApiOperation(value = "글 가져오기(5개)")
     @GetMapping("/board/{current}")
-    public ResponseEntity<List<BoardDto>> getRecentBoards(@PathVariable(value = "current") int currentPage) {
+    public ResponseEntity<List<BoardsResponse>> getRecentBoards(@PathVariable(value = "current") int currentPage) {
 
         return ResponseEntity.ok(boardService.getRecentBoards(currentPage));
     }
