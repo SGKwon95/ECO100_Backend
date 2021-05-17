@@ -26,27 +26,19 @@ import lombok.ToString;
 @Builder
 @ToString(exclude = "challenge_user")
 public class ChallengePost extends BaseTimeEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long boardId;
-
-    private String title;
+    private Long challengePostId;
 
     private String contents;
 
     private String imageUrl;
 
-    private Integer likes;
+    private Long challengeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToMany(mappedBy = "board")
-    private List<Comment> comments;
-
-    @OneToMany(mappedBy = "board")
-    private List<Likes> likesList;
+    @JoinColumn(name = "challenge_user_id")
+    private ChallengeUser challengeUser;
 
 }
