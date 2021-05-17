@@ -16,13 +16,13 @@ public class ChallengeOfTheMonthDTO {
 
     private String imageUrl;
 
-    private Integer participationCnt;
+    private Integer myParticipationCnt;
 
     public ChallengeOfTheMonthDTO(Challenge challenge, Integer count) {
         this.challengeId = challenge.getChallengeId();
         this.subject = challenge.getSubject();
         this.numOfParticipants = challenge.getNumOfParticipants();
         this.imageUrl = challenge.getImageUrl();
-        this.participationCnt = count;
+        this.myParticipationCnt = count;
     }
 }
