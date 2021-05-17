@@ -81,7 +81,7 @@ public class BoardService {
     public List<BoardsResponse> getRecentBoards(int currentPage) {
         //PageRequest.of(불러올 페이지, 불러올 페이지 개수, 정렬 방법, 정렬 기준)
         Page<Board> page = boardRepository
-                .findAll(PageRequest.of(currentPage * 5, 5, Sort.Direction.DESC, "boardId"));
+                .findAll(PageRequest.of(currentPage, 5, Sort.Direction.DESC, "boardId"));
         return page.getContent().stream().map(BoardsResponse::new).collect(Collectors.toList());
     }
 
