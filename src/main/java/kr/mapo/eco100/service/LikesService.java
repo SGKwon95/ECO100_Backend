@@ -1,6 +1,7 @@
 package kr.mapo.eco100.service;
 
 import kr.mapo.eco100.controller.v1.board.dto.IncreaseLikesRequest;
+import kr.mapo.eco100.controller.v1.board.dto.ReadRequest;
 import kr.mapo.eco100.entity.Board;
 import kr.mapo.eco100.entity.Likes;
 import kr.mapo.eco100.error.BoardNotFoundException;
@@ -52,5 +53,18 @@ public class LikesService {
                 return false;
             }
         }
+    }
+
+    public boolean canClickLikes(ReadRequest readRequest) {
+        Board board = boardRepository.findById(
+            readRequest.getBoardId())
+            .orElseThrow(() -> new BoardNotFoundException("좋아요를 누른 게시물이 존재하지 않음"));
+
+        Optional<Likes> likes = likesRepository.findByuserIdAndBoard(
+            readRequest.getUserId(),
+            board
+            );
+        
+        return !likes.isPresent();
     }
 }
