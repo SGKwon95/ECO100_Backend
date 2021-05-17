@@ -4,8 +4,10 @@ import kr.mapo.eco100.controller.v1.board.dto.BoardDto;
 import kr.mapo.eco100.controller.v1.board.dto.BoardsResponse;
 import kr.mapo.eco100.controller.v1.board.dto.CreateRequest;
 import kr.mapo.eco100.controller.v1.board.dto.IncreaseLikesRequest;
+import kr.mapo.eco100.controller.v1.board.dto.ReadRequest;
 import kr.mapo.eco100.controller.v1.board.dto.UpdateRequest;
 import kr.mapo.eco100.service.BoardService;
+import kr.mapo.eco100.service.LikesService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.MediaType;
@@ -27,6 +29,7 @@ import javax.validation.Valid;
 public class BoardController {
 
     private final BoardService boardService;
+    private final LikesService likesService;
 
     @ApiOperation(value = "사진 없는 글쓰기")
     @PostMapping("/board/create")
@@ -38,22 +41,22 @@ public class BoardController {
     @ApiOperation(value = "사진 있는 글쓰기")
     @PostMapping(value = "/board/create/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<BoardsResponse> createWithImage(MultipartHttpServletRequest request) throws IOException {
-        
+
         @Valid
-        CreateRequest createRequest = CreateRequest.builder()
-                .userId(Long.parseLong(request.getParameter("userId")))
-                .title(request.getParameter("title").toString())
-                .contents(request.getParameter("contents").toString())
+        CreateRequest createRequest = CreateRequest.builder().userId(Long.parseLong(request.getParameter("userId")))
+                .title(request.getParameter("title").toString()).contents(request.getParameter("contents").toString())
                 .build();
 
-        return ResponseEntity.ok(new BoardsResponse(boardService.createWithImage(createRequest, request.getFile("image"))));
+        return ResponseEntity
+                .ok(new BoardsResponse(boardService.createWithImage(createRequest, request.getFile("image"))));
     }
 
     @ApiOperation(value = "글 읽기")
-    @GetMapping("/board/read/{id}")
-    public ResponseEntity<BoardDto> read(@PathVariable(value = "id") Long boardId) {
+    @GetMapping("/board/read")
+    public ResponseEntity<BoardDto> read(@RequestBody @Valid ReadRequest readRequest) {
 
-        return ResponseEntity.ok(new BoardDto(boardService.read(boardId)));
+        return ResponseEntity.ok(new BoardDto(boardService.read(readRequest.getBoardId()),
+                likesService.canClickLikes(readRequest)));
     }
 
     @ApiOperation(value = "글 가져오기(5개)")
