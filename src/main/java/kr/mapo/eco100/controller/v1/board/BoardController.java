@@ -43,8 +43,10 @@ public class BoardController {
     public ResponseEntity<BoardsResponse> createWithImage(MultipartHttpServletRequest request) throws IOException {
 
         @Valid
-        CreateRequest createRequest = CreateRequest.builder().userId(Long.parseLong(request.getParameter("userId")))
-                .title(request.getParameter("title").toString()).contents(request.getParameter("contents").toString())
+        CreateRequest createRequest = CreateRequest.builder()
+                .userId(Long.parseLong(request.getParameter("userId")))
+                .title(request.getParameter("title"))
+                .contents(request.getParameter("contents"))
                 .build();
 
         return ResponseEntity
