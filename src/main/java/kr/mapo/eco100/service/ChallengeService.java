@@ -9,6 +9,7 @@ import java.util.*;
 import kr.mapo.eco100.controller.v1.challenge.dto.ChallengeCreateRequest;
 import kr.mapo.eco100.entity.ChallengePost;
 import kr.mapo.eco100.error.ChallengeNotFoundException;
+import kr.mapo.eco100.error.ChallengePostNotFoundException;
 import kr.mapo.eco100.repository.challenge.ChallengePostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -134,6 +135,12 @@ public class ChallengeService {
                 challengePost
                         .build()
         );
+    }
+
+    public ChallengePost read(Long id) {
+        ChallengePost post = challengePostRepository.findById(id)
+                .orElseThrow(()->new ChallengePostNotFoundException("해당 챌린지 게시물이 존재하지 않습니다."));
+        return post;
     }
 
     public void update(ChallengeCreateRequest createRequest) {

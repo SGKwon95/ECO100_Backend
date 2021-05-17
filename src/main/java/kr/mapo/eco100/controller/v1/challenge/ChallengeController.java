@@ -5,6 +5,7 @@ import java.util.List;
 
 import kr.mapo.eco100.controller.v1.board.dto.BoardsResponse;
 import kr.mapo.eco100.controller.v1.challenge.dto.ChallengeCreateRequest;
+import kr.mapo.eco100.entity.ChallengePost;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,13 @@ public class ChallengeController {
         challengeService.create(createRequest);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "내가 도전한 챌린지 보기(1개)")
+    @PostMapping(value = "/challenge/read/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ChallengePost> read(@PathVariable Long id) throws IOException {
+
+        return ResponseEntity.ok(challengeService.read(id));
     }
 
     @ApiOperation(value = "챌린지 수정하기")
