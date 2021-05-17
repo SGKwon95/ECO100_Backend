@@ -12,4 +12,9 @@ public class ErrorHandler {
     public ResponseEntity<String> ImageNotFoundExceptionHandler(ImageNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ChallengeNotFoundException.class)
+    public ResponseEntity<String> ChallengeNotFoundExceptionHandler(ImageNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }
