@@ -38,6 +38,6 @@ public class ChallengeUser {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "challenge_user")
+    @OneToMany(mappedBy = "challengeUser")
     private List<ChallengePost> challengePosts;
 }
