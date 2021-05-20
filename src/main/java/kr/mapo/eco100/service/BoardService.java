@@ -24,7 +24,9 @@ import kr.mapo.eco100.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -95,8 +97,23 @@ public class BoardService {
     }
 
     public void delete(Long boardId) {
-        boardRepository.delete(
-                boardRepository.findById(boardId).orElseThrow(() -> new BoardNotFoundException("삭제할 아이디의 게시글이 없습니다")));
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BoardNotFoundException("삭제할 아이디의 게시글이 없습니다"));
+        if(board.getImageUrl() != null) {
+            String fileLocation = "./images/board/"; // 저장할 경로를 지정한다.
+            String filename = board.getImageUrl().substring(board.getImageUrl().lastIndexOf("/")+1);
+            File file = new File(fileLocation+filename);
+            if(file.exists()) {
+                if(file.delete()) {
+                    log.info(filename+" 파일을 삭제하였습니다.");
+                } else {
+                    log.info(filename+" 파일을 삭제하는데 실패하였습니다.");
+                }
+            } else {
+                log.info(filename+" 파일이 존재하지 않습니다.");
+            }
+        }
+
+        boardRepository.delete(board);
     }
 
     public Boolean increaseLikes(IncreaseLikesRequest increaseLikesRequest) {
