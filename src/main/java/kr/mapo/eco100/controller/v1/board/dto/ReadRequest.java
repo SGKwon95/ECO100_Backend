@@ -14,4 +14,9 @@ public class ReadRequest {
 
     @NotNull
     private Long boardId;
+
+    public ReadRequest(Long boardId, Long userId) {
+        this.boardId = boardId;
+        this.userId = userId;
+    }
 }
