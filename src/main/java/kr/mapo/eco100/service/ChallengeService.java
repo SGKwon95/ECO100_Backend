@@ -5,10 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import kr.mapo.eco100.controller.v1.challenge.dto.ChallengeCreateRequest;
 import kr.mapo.eco100.entity.ChallengePost;
+import kr.mapo.eco100.error.ChallengeCntAlreadyTwoException;
 import kr.mapo.eco100.error.ChallengeNotFoundException;
+import kr.mapo.eco100.error.ChallengePostNotFoundException;
 import kr.mapo.eco100.repository.challenge.ChallengePostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -50,17 +53,17 @@ public class ChallengeService {
 
             challengeUserTable.get().forEach(obj -> {
                 isPicked[obj.getChallenge().getChallengeId().intValue()] = true;
-                result.add(new ChallengeOfTheMonthDTO(obj.getChallenge(), obj.getCount()));
+                result.add(new ChallengeOfTheMonthDTO(obj.getChallenge(), obj.getChallengePosts().stream().map(post -> post.getChallengePostId()).collect(Collectors.toList())));
             });
 
             challengeList.forEach(obj -> {
                 if (!isPicked[obj.getChallengeId().intValue()]) {
-                    result.add(new ChallengeOfTheMonthDTO(obj, 0));
+                    result.add(new ChallengeOfTheMonthDTO(obj, Collections.<Long>emptyList()));
                 }
             });
             result.sort(Comparator.comparing(ChallengeOfTheMonthDTO::getChallengeId));
         } else {
-            challengeList.forEach(obj -> result.add(new ChallengeOfTheMonthDTO(obj, 0)));
+            challengeList.forEach(obj -> result.add(new ChallengeOfTheMonthDTO(obj, Collections.<Long>emptyList())));
         }
         return result;
     }
@@ -79,6 +82,13 @@ public class ChallengeService {
 
         Challenge target = challengeRepository.findById(createRequest.getChallengeId())
                 .orElseThrow(() -> new ChallengeNotFoundException("해당 챌린지가 존재하지 않습니다"));
+
+        Optional<ChallengeUser> updateTarget = challengeUserRepository
+                .findByUserAndChallenge(user, target);
+        
+        if(updateTarget.isPresent() && updateTarget.get().getCount() == 2) {
+            throw new ChallengeCntAlreadyTwoException("이미 2번 도전 하셨습니다.");
+        }
 
         String fileLocation = "./images/challenge/"; // 저장할 경로를 지정한다.
         FileOutputStream fos = null;
@@ -103,13 +113,12 @@ public class ChallengeService {
             fos.close();
         }
 
-        Optional<ChallengeUser> updateTarget = challengeUserRepository
-                .findByUserAndChallenge(user, target);
-
         ChallengePost.ChallengePostBuilder challengePost = ChallengePost.builder()
                 .imageUrl("http://rpinas.iptime.org:10122/image/challenge/" + filename)
+                .challengeId(target.getChallengeId())
                 .contents(createRequest.getContents());
-
+        
+        //2번째 도전일 경우
         if (updateTarget.isPresent()) {
             challengeUserRepository.findById(updateTarget.get().getChallengeUserId())
                     .map(challengeUser -> {
@@ -121,6 +130,7 @@ public class ChallengeService {
                     challengeUserRepository.findById(updateTarget.get().getChallengeUserId()).get()
             );
         } else {
+            //첫 번째 도전일 경우
             challengePost.challengeUser(
                     challengeUserRepository.save(ChallengeUser.builder()
                             .challenge(target)
@@ -134,6 +144,11 @@ public class ChallengeService {
                 challengePost
                         .build()
         );
+    }
+
+    public ChallengePost read(Long id) {
+        return challengePostRepository.findById(id)
+                .orElseThrow(()->new ChallengePostNotFoundException("해당 챌린지 게시물이 존재하지 않습니다."));
     }
 
     public void update(ChallengeCreateRequest createRequest) {
