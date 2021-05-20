@@ -2,11 +2,14 @@ package kr.mapo.eco100.controller.v1.board;
 
 import kr.mapo.eco100.controller.v1.board.dto.BoardDto;
 import kr.mapo.eco100.controller.v1.board.dto.BoardsResponse;
+import kr.mapo.eco100.controller.v1.board.dto.CommentCreateRequest;
 import kr.mapo.eco100.controller.v1.board.dto.CreateRequest;
 import kr.mapo.eco100.controller.v1.board.dto.IncreaseLikesRequest;
 import kr.mapo.eco100.controller.v1.board.dto.ReadRequest;
 import kr.mapo.eco100.controller.v1.board.dto.UpdateRequest;
+import kr.mapo.eco100.controller.v1.comment.dto.CommentDto;
 import kr.mapo.eco100.service.BoardService;
+import kr.mapo.eco100.service.CommentService;
 import kr.mapo.eco100.service.LikesService;
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +33,7 @@ public class BoardController {
 
     private final BoardService boardService;
     private final LikesService likesService;
+    private final CommentService commentService;
 
     @ApiOperation(value = "사진 없는 글쓰기")
     @PostMapping("/board/create")
@@ -54,8 +58,10 @@ public class BoardController {
     }
 
     @ApiOperation(value = "글 읽기")
-    @GetMapping("/board/read")
-    public ResponseEntity<BoardDto> read(@RequestBody @Valid ReadRequest readRequest) {
+    @GetMapping("/board/read/{boardId}/{userId}")
+    public ResponseEntity<BoardDto> read(@PathVariable(value = "boardId") Long boardId, @PathVariable(value = "userId") Long userId) {
+        @Valid
+        ReadRequest readRequest = new ReadRequest(boardId,userId);
 
         return ResponseEntity.ok(new BoardDto(boardService.read(readRequest.getBoardId()),
                 likesService.canClickLikes(readRequest)));
@@ -88,6 +94,23 @@ public class BoardController {
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Long boardId) {
         boardService.delete(boardId);
         return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "댓글 쓰기")
+    @PostMapping("/board/comment/create")
+    public ResponseEntity<Void> createComment(@RequestBody @Valid CommentCreateRequest commentCreateRequest) {
+
+        commentService.create(commentCreateRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "게시판 ID로 댓글 불러오기")
+    @GetMapping("/board/comment/{boardId}")
+    public ResponseEntity<List<CommentDto>> getComments(@PathVariable(value = "boardId") Long boardId) {
+
+        return ResponseEntity.ok(
+            commentService.getAll(boardId)
+        );
     }
 
 }
