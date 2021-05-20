@@ -2,7 +2,6 @@ package kr.mapo.eco100.entity;
 
 import kr.mapo.eco100.BaseTimeEntity;
 
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +24,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @Builder
-@ToString(exclude = "challenge_user")
+@ToString(exclude = "challengeUser")
 public class ChallengePost extends BaseTimeEntity {
 
     @Id
@@ -37,6 +37,7 @@ public class ChallengePost extends BaseTimeEntity {
 
     private Long challengeId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_user_id")
     private ChallengeUser challengeUser;
