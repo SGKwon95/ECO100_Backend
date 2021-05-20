@@ -14,7 +14,17 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(ChallengeNotFoundException.class)
-    public ResponseEntity<String> ChallengeNotFoundExceptionHandler(ImageNotFoundException e) {
+    public ResponseEntity<String> ChallengeNotFoundExceptionHandler(ChallengeNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ChallengeCntAlreadyTwoException.class)
+    public ResponseEntity<String> ChallengeCntAlreadyTwoExceptionHandler(ChallengeCntAlreadyTwoException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BoardNotFoundException.class)
+    public ResponseEntity<String> BoardNotFoundExceptionHandler(BoardNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
