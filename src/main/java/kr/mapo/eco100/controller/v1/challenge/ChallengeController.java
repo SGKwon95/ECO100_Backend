@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kr.mapo.eco100.controller.v1.challenge.dto.ChallengeOfTheMonthDTO;
+import kr.mapo.eco100.controller.v1.challenge.dto.ChallengePostReadDto;
 import kr.mapo.eco100.service.ChallengeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -48,6 +49,14 @@ public class ChallengeController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @ApiOperation(value = "내가 도전한 챌린지 보기(1개)")
+    @GetMapping(value = "/challenge/read/{challengePostId}")
+    public ResponseEntity<ChallengePostReadDto> read(@PathVariable(value = "challengePostId") Long id) {
+
+        return ResponseEntity.ok(new ChallengePostReadDto(challengeService.read(id)));
+    }
+
 
     @ApiOperation(value = "챌린지 수정하기")
     @PutMapping(value = "/challenge/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
