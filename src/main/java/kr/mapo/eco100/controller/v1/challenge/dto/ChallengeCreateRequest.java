@@ -2,7 +2,6 @@ package kr.mapo.eco100.controller.v1.challenge.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.Builder;
 import lombok.Getter;
