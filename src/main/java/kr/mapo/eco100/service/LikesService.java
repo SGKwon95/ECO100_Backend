@@ -60,11 +60,8 @@ public class LikesService {
             readRequest.getBoardId())
             .orElseThrow(() -> new BoardNotFoundException("좋아요를 누른 게시물이 존재하지 않음"));
 
-        Optional<Likes> likes = likesRepository.findByuserIdAndBoard(
-            readRequest.getUserId(),
-            board
-            );
-        
-        return !likes.isPresent();
+        Optional<Likes> likes = likesRepository.findByuserIdAndBoard(readRequest.getUserId(),board);
+
+        return likes.isPresent()? likes.get().getIsCanceled(): true;
     }
 }

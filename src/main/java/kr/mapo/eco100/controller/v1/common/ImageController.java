@@ -31,7 +31,9 @@ public class ImageController {
         } catch (FileNotFoundException e) {
             throw new ImageNotFoundException("이미지가 존재하지 않음");
         } finally {
-            imageStream.close();
+            if(imageStream != null) {
+                imageStream.close();
+            }
         }
         return ResponseEntity.ok(imageByteArray); 
     }

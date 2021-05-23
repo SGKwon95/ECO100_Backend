@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,7 +12,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UpdateRequest {
+@Builder
+public class UpdateRequestWithImage {
     
     @NotNull
     private Long boardId;
@@ -22,8 +24,5 @@ public class UpdateRequest {
 
     @NotBlank(message = "내용은 필수로 입력해야 합니다")
     private String contents;
-
-    @NotNull
-    private Boolean isDeletedImage;
 
 }

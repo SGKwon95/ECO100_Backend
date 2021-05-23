@@ -11,6 +11,7 @@ import kr.mapo.eco100.entity.Board;
 import kr.mapo.eco100.entity.Comment;
 import kr.mapo.eco100.entity.User;
 import kr.mapo.eco100.error.BoardNotFoundException;
+import kr.mapo.eco100.error.CommentNotFoundException;
 import kr.mapo.eco100.error.UserNotFoundException;
 import kr.mapo.eco100.repository.BoardRepository;
 import kr.mapo.eco100.repository.CommentRepository;
@@ -46,5 +47,17 @@ public class CommentService {
                 .orElseThrow(()->new BoardNotFoundException("해당 게시글이 존재하지 않습니다."));
         
         return commentRepository.findByBoard(board).stream().map(CommentDto::new).collect(Collectors.toList());
+    }
+
+    public List<CommentDto> myComments(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()->new UserNotFoundException("해당 유저가 존재하지 않습니다."));
+        
+        return commentRepository.findByUser(user).stream().map(CommentDto::new).collect(Collectors.toList());
+    }
+
+    public void delete(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new CommentNotFoundException("해당 댓글이 존재하지 않습니다."));
+        commentRepository.delete(comment);
     }
 }

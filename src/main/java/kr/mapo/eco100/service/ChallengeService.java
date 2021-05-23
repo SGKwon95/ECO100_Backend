@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import kr.mapo.eco100.controller.v1.challenge.dto.ChallengeOfTheMonthDTO;
+import kr.mapo.eco100.controller.v1.challenge.dto.ChallengePostReadDto;
 import kr.mapo.eco100.entity.Challenge;
 import kr.mapo.eco100.entity.ChallengeUser;
 import kr.mapo.eco100.entity.User;
@@ -149,6 +150,19 @@ public class ChallengeService {
     public ChallengePost read(Long id) {
         return challengePostRepository.findById(id)
                 .orElseThrow(()->new ChallengePostNotFoundException("해당 챌린지 게시물이 존재하지 않습니다."));
+    }
+
+    public List<ChallengePostReadDto> myChallengePosts(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()->new UserNotFoundException("해당 유저가 존재하지 않습니다."));
+        
+        List<ChallengePost> posts = new ArrayList<>();
+        challengeUserRepository.findByUser(user).stream().forEach(cu -> {
+            cu.getChallengePosts().forEach(post -> {
+                posts.add(post);
+            });
+        });
+        return posts.stream().map(ChallengePostReadDto::new).collect(Collectors.toList());
     }
 
     public void update(ChallengeCreateRequest createRequest) {

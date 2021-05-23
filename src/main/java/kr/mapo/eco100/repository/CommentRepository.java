@@ -7,8 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import kr.mapo.eco100.entity.Board;
 import kr.mapo.eco100.entity.Comment;
+import kr.mapo.eco100.entity.User;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findByBoard(Board board);
+    List<Comment> findByUser(User user);
 }

@@ -14,6 +14,8 @@ public class CommentDto {
 
     private Long commentId;
 
+    private Long boardId;
+
     private String writer;
 
     private String contents;
@@ -22,6 +24,7 @@ public class CommentDto {
 
     public CommentDto(Comment comment){
         this.commentId = comment.getCommentId();
+        this.boardId = comment.getBoard().getBoardId();
         this.writer = comment.getUser().getNickname();
         this.contents = comment.getContents();
         this.date = (comment.getModifiedDate() != null)? comment.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : null;

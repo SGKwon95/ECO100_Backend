@@ -11,24 +11,24 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BoardsResponse {
-    private Long board_id;
+    private Long boardId;
 
-    private String user_nickname;
+    private String nickname;
 
     private String title;
 
-    private Integer comments_cnt;
+    private Integer commentsCnt;
 
-    private Integer likes_cnt;
+    private Integer likesCnt;
 
     private String date;
 
     public BoardsResponse(Board board) {
-        this.board_id = board.getBoardId();
-        this.user_nickname = board.getUser().getNickname();
+        this.boardId = board.getBoardId();
+        this.nickname = board.getUser().getNickname();
         this.title = board.getTitle();
-        this.comments_cnt = (board.getComments() != null)? board.getComments().size() : 0;
-        this.likes_cnt = board.getLikes();
+        this.commentsCnt = (board.getComments() != null)? board.getComments().size() : 0;
+        this.likesCnt = board.getLikes();
         this.date = (board.getModifiedDate() != null)? board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : null;
     }
 }

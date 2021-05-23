@@ -75,20 +75,10 @@ public class ChallengeController {
         return ResponseEntity.noContent().build();
     }
 
-//    @ApiOperation(value = "내가 도전한 챌린지 글 보기")
-//    @GetMapping(value = "/challenge/{userId}")
-//    public ResponseEntity<Void> create(MultipartHttpServletRequest request) {
-//
-//        @Valid
-//        ChallengeCreateRequest createRequest = ChallengeCreateRequest.builder()
-//                .userId(Long.parseLong(request.getParameter("userId")))
-//                .challengeId(Long.parseLong(request.getParameter("challengeId")))
-//                .contents(request.getParameter("contents"))
-//                .multipartFile(request.getFile("image"))
-//                .build();
-//
-//        challengeService.create(createRequest);
-//
-//        return ResponseEntity.noContent().build();
-//    }
+   @ApiOperation(value = "내가 도전한 모든 챌린지 글 보기")
+   @GetMapping(value = "/challenge/post/{userId}")
+   public ResponseEntity<List<ChallengePostReadDto>> myChallengePosts(@PathVariable("userId") Long userId) {
+
+       return ResponseEntity.ok(challengeService.myChallengePosts(userId));
+   }
 }
