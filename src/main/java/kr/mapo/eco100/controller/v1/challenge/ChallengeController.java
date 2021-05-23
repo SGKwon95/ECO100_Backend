@@ -5,6 +5,7 @@ import java.util.List;
 
 import kr.mapo.eco100.controller.v1.board.dto.BoardsResponse;
 import kr.mapo.eco100.controller.v1.challenge.dto.ChallengeCreateRequest;
+import kr.mapo.eco100.entity.ChallengePost;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
