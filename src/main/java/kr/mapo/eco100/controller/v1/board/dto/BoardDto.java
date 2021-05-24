@@ -55,6 +55,6 @@ public class BoardDto {
         }
         this.likesCnt = board.getLikes();
         this.canClickLikes = can_click_likes;
-        this.date = (board.getModifiedDate() != null)? board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : null;
+        this.date = board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

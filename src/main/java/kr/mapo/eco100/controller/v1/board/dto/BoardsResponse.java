@@ -29,6 +29,6 @@ public class BoardsResponse {
         this.title = board.getTitle();
         this.commentsCnt = (board.getComments() != null)? board.getComments().size() : 0;
         this.likesCnt = board.getLikes();
-        this.date = (board.getModifiedDate() != null)? board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : null;
+        this.date = board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

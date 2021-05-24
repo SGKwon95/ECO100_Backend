@@ -27,7 +27,7 @@ public class CommentDto {
         this.boardId = comment.getBoard().getBoardId();
         this.writer = comment.getUser().getNickname();
         this.contents = comment.getContents();
-        this.date = (comment.getModifiedDate() != null)? comment.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : null;
+        this.date = comment.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }
 
