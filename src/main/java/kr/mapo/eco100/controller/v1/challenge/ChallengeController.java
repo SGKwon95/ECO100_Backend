@@ -5,7 +5,7 @@ import java.util.List;
 
 import kr.mapo.eco100.controller.v1.board.dto.BoardsResponse;
 import kr.mapo.eco100.controller.v1.challenge.dto.ChallengeCreateRequest;
-import kr.mapo.eco100.entity.ChallengePost;
+import kr.mapo.eco100.controller.v1.challenge.dto.ChallengePostReadDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kr.mapo.eco100.controller.v1.challenge.dto.ChallengeOfTheMonthDTO;
-import kr.mapo.eco100.controller.v1.challenge.dto.ChallengePostReadDto;
 import kr.mapo.eco100.service.ChallengeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
