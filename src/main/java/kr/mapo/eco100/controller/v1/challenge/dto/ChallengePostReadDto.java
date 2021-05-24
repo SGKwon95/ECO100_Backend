@@ -1,5 +1,6 @@
 package kr.mapo.eco100.controller.v1.challenge.dto;
 
+import java.time.format.DateTimeFormatter;
 import kr.mapo.eco100.entity.ChallengePost;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,13 +15,16 @@ public class ChallengePostReadDto {
 
     private String imageUrl;
 
-    private Long challengeId;
+    private String subject;
+
+    private String date;
 
     public ChallengePostReadDto(ChallengePost post) {
         this.challengePostId = post.getChallengePostId();
         this.contents = post.getContents();
         this.imageUrl = post.getImageUrl();
-        this.challengeId = post.getChallengeId();
+        this.subject = post.getChallengeUser().getChallenge().getSubject();
+        this.date = post.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy. MM. dd."));
     }
 
 }
