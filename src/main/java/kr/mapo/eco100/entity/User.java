@@ -18,9 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    private Long userNo;
-
-    private Integer level;
+    private Long uid;
 
     private String nickname;
 
@@ -31,4 +29,5 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Comment> comments;
 
+    private Integer challengeCompleteCnt;
 }
