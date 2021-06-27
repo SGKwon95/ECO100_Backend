@@ -160,7 +160,7 @@ public class BoardController {
     }
 
     @ApiOperation(value = "내가 쓴 모든 댓글 불러오기")
-    @PostMapping("/board/comment/all/{userId}")
+    @GetMapping("/board/comment/all/{userId}")
     public ResponseEntity<List<CommentDto>> myComments(@PathVariable(value = "userId") Long userId) {
 
         return ResponseEntity.ok(commentService.myComments(userId));
