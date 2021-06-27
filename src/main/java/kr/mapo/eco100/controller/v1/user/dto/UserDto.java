@@ -4,7 +4,6 @@ import kr.mapo.eco100.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import static org.springframework.beans.BeanUtils.copyProperties;
 
 @Getter
 @Setter
@@ -15,7 +14,9 @@ public class UserDto {
 
     private String nickname;
 
-    private Integer level;
+    public UserDto(User user) {
+        this.userId = user.getUserId();
+        this.nickname = user.getNickname();
+    }
 
-    public UserDto(User source) { copyProperties(source,this);}
 }
