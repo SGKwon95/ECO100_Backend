@@ -13,4 +13,5 @@ import kr.mapo.eco100.entity.User;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findByBoard(Board board);
     List<Comment> findByUser(User user);
+    Integer countByUser(User user);
 }
