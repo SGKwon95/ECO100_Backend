@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class JoinRequest {
 
-    private Long userNo;
+    private Long kakaoId;
 
     private String nickname;
 }
