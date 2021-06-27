@@ -16,18 +16,21 @@ public class CommentDto {
 
     private Long boardId;
 
+    private Long userId;
+
     private String writer;
 
     private String contents;
 
     private String date;
 
-    public CommentDto(Comment comment){
+    public CommentDto(Comment comment) {
         this.commentId = comment.getCommentId();
         this.boardId = comment.getBoard().getBoardId();
         this.writer = comment.getUser().getNickname();
         this.contents = comment.getContents();
         this.date = comment.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.userId = comment.getUser().getUserId();
     }
 }
 
