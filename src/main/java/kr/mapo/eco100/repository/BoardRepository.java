@@ -14,4 +14,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findByTitleContains(String word);
     List<Board> findByContentsContains(String word);
     List<Board> findByTitleContainsOrContentsContains(String title, String contents);
+    Integer countByUser(User user);
 }
