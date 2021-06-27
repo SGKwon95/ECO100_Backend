@@ -34,7 +34,7 @@ public class ChallengeController {
     }
 
     @ApiOperation(value = "챌린지 도전하기")
-    @PostMapping(value = "/challenge/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/challenge/create"/*, consumes = MediaType.MULTIPART_FORM_DATA_VALUE*/)
     public ResponseEntity<Void> create(MultipartHttpServletRequest request) throws IOException {
 
         @Valid
