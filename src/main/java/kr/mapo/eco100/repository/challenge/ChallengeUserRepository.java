@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import kr.mapo.eco100.entity.ChallengeUser;
 
 @Repository
-public interface ChallengeUserRespoitory extends JpaRepository<ChallengeUser, Long> {
+public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Long> {
     Optional<List<ChallengeUser>> findByUserAndChallengeIn(User user, List<Challenge> challenges);
     Optional<ChallengeUser> findByUserAndChallenge(User user, Challenge challenge);
     List<ChallengeUser> findByUser(User user);
