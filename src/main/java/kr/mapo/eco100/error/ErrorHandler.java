@@ -2,11 +2,19 @@ package kr.mapo.eco100.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ErrorHandler {
+
+    //request data가 유효하지 않을 경우 발생하는 예외
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> requestParamsNotValidExceptionHalder(MethodArgumentNotValidException e) {
+        
+        return ResponseEntity.badRequest().body(new ErrorResponse(400,e.getBindingResult().getFieldError().getDefaultMessage()));
+    }
 
     @ExceptionHandler(ImageNotFoundException.class)
     public ResponseEntity<String> ImageNotFoundExceptionHandler(ImageNotFoundException e) {
