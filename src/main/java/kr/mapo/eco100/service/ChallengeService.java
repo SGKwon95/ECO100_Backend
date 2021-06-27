@@ -25,7 +25,7 @@ import kr.mapo.eco100.entity.User;
 import kr.mapo.eco100.error.UserNotFoundException;
 import kr.mapo.eco100.repository.UserRepository;
 import kr.mapo.eco100.repository.challenge.ChallengeRepository;
-import kr.mapo.eco100.repository.challenge.ChallengeUserRespoitory;
+import kr.mapo.eco100.repository.challenge.ChallengeUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ChallengeService {
 
     private final ChallengeRepository challengeRepository;
-    private final ChallengeUserRespoitory challengeUserRepository;
+    private final ChallengeUserRepository challengeUserRepository;
     private final ChallengePostRepository challengePostRepository;
     private final UserRepository userRepository;
 
